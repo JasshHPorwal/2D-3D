@@ -8,7 +8,7 @@ from app.api.routes.reconstruction import router
 @asynccontextmanager
 async def lifespan(app):
  s=get_settings(); os.makedirs(s.UPLOAD_DIR,exist_ok=True)
- app.state.tesseract_available = bool(shutil.which(s.TESSERACT_CMD) or os.path.exists(s.TESSERACT_CMD))
+ if not shutil.which(s.TESSERACT_CMD) and not os.path.exists(s.TESSERACT_CMD): raise RuntimeError('tesseract missing')
  yield
 app=FastAPI(lifespan=lifespan)
 app.add_middleware(CORSMiddleware,allow_origins=get_settings().CORS_ORIGINS,allow_methods=['*'],allow_headers=['*'])

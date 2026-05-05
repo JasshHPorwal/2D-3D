@@ -3,6 +3,7 @@ try:
     import open3d as o3d
 except Exception:
     o3d = None
+import open3d as o3d, pytesseract
 from fastapi import APIRouter,UploadFile,File,HTTPException,Depends
 from fastapi.responses import FileResponse
 from app.core.config import get_settings, Settings
@@ -26,12 +27,9 @@ def model(job_id:str):
  return FileResponse(r.glb_path,media_type='model/gltf-binary',filename='model.glb')
 @router.get('/health')
 def health():
-    try:
-        tver = str(pytesseract.get_tesseract_version())
-    except Exception:
-        tver = 'not-installed'
     return {
         'status':'ok',
-        'tesseract': tver,
+        'tesseract':str(pytesseract.get_tesseract_version()),
         'open3d': (o3d.__version__ if o3d is not None else 'not-installed')
     }
+def health(): return {'status':'ok','tesseract':str(pytesseract.get_tesseract_version()),'open3d':o3d.__version__}

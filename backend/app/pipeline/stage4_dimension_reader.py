@@ -1,8 +1,7 @@
-import re, shutil, cv2, numpy as np, pytesseract
+import re, cv2, numpy as np, pytesseract
 from app.models.schema import DimensionAnnotation
 
 def read_dimensions(view_crops):
- tesseract_ok = bool(shutil.which('tesseract') or shutil.which('tesseract.exe'))
  dims={}; scales={}
  for vn,img in view_crops.items():
   g=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY); inv=255-g
@@ -13,7 +12,7 @@ def read_dimensions(view_crops):
    if 50<a<3000:
     x,y,w,h=cv2.boundingRect(c); x0=max(0,x-10); y0=max(0,y-10); x1=min(g.shape[1],x+w+10); y1=min(g.shape[0],y+h+10)
     roi=g[y0:y1,x0:x1]
-    txt = pytesseract.image_to_string(roi,config='--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789.Ø⌀φO') if tesseract_ok else ''
+    txt=pytesseract.image_to_string(roi,config='--psm 7 --oem 3 -c tessedit_char_whitelist=0123456789.Ø⌀φO')
     raw=txt.strip(); num=re.sub(r'[^0-9.]','',raw)
     if not num: continue
     v=float(num)

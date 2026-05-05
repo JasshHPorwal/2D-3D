@@ -34,6 +34,3 @@ Install optional packages (non-Windows):
 ```bash
 pip install -r requirements-optional.txt
 ```
-
-
-Backend startup no longer fails if Tesseract is missing; OCR-dependent extraction degrades gracefully and `/api/health` reports `tesseract: not-installed`.
