@@ -25,3 +25,4 @@ curl -F "drawing=@sample_drawing.png" http://localhost:8000/api/reconstruct
 - Supports 1/2/3 detected views.
 - Pipeline is data-driven from CV + OCR outputs.
 - Exports `model.glb` per job at `/tmp/sketch3d/<job_id>/model.glb`.
+
