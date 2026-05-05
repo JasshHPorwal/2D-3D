@@ -26,4 +26,10 @@ def model(job_id:str):
  if not r or r.status!='COMPLETED' or not r.glb_path: raise HTTPException(404,'model not found')
  return FileResponse(r.glb_path,media_type='model/gltf-binary',filename='model.glb')
 @router.get('/health')
+def health():
+    return {
+        'status':'ok',
+        'tesseract':str(pytesseract.get_tesseract_version()),
+        'open3d': (o3d.__version__ if o3d is not None else 'not-installed')
+    }
 def health(): return {'status':'ok','tesseract':str(pytesseract.get_tesseract_version()),'open3d':o3d.__version__}
