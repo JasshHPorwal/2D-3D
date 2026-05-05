@@ -26,6 +26,3 @@ curl -F "drawing=@sample_drawing.png" http://localhost:8000/api/reconstruct
 - Pipeline is data-driven from CV + OCR outputs.
 - Exports `model.glb` per job at `/tmp/sketch3d/<job_id>/model.glb`.
 
-
-## Windows note (Python 3.11)
-`open3d` is not published for some Windows/Python combos. This project marks `open3d` as optional on Windows so installation succeeds; `/api/health` will report `"open3d": "not-installed"` in that case.
